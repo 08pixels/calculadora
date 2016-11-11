@@ -1,0 +1,66 @@
+package calculadora;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+
+    private Calculadora c = new Calculadora();
+
+	public Calculadora getCalculadora() {
+		return c;
+	}
+
+	public void setCalculadora(Calculadora _c) {
+		c = _c;
+	}
+
+:}
+
+action code {:
+
+    private Calculadora c = new Calculadora();
+
+	public Calculadora getCalculadora() {
+		return c;
+	}
+
+	public void setCalculadora(Calculadora _c) {
+		c = _c;
+	}
+
+:}
+
+terminal PLUS, MINUS, TIMES, DIVIDE;
+terminal Integer INT;
+
+non terminal expr, term, opr;
+
+expr ::=  INT:e 				{: parser.getCalculadora().addOperand(e, true); :}
+		| PLUS INT:e			{: parser.getCalculadora().addOperand(e, true);	:}
+		| MINUS INT:e			{: parser.getCalculadora().addOperand(e, false);:}
+       	| MINUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, false);:}
+       	| PLUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, true); :}
+		| INT:e opr expr		{: parser.getCalculadora().addOperand(e, true); :}
+		;
+       
+opr ::= PLUS
+		{:
+			parser.getCalculadora().addOperator(Calculadora.PLUS);
+		:}
+		
+		| MINUS
+		{:
+			parser.getCalculadora().addOperator(Calculadora.MINUS);
+		:}
+	  
+		| TIMES
+		{:
+			parser.getCalculadora().addOperator(Calculadora.TIMES);
+		:} 
+
+		| DIVIDE
+		{:
+			parser.getCalculadora().addOperator(Calculadora.DIVIDE);
+		:}
+		;

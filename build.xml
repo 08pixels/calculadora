@@ -1,0 +1,49 @@
+<project name="pROJETOeXEMPLO" default="all" basedir=".">
+
+	<!-- Specify the directories used in project -->
+	<property name="src"     location="src"/>
+	<property name="calculadora" location="src/calculadora"/>
+	<property name="bin"     location="bin"/>
+	<property name="lib"     location="lib"/>
+
+	<!-- Specify the classpath of the project -->
+    <path id="project.classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+    </path>
+
+	<!-- Cleans JEzMath -->
+	<target name="clean" description="Cleans">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin}" includes="**/*"/>
+		</delete>
+	</target>
+
+	<!-- Generates JMParser(cup), JMSymbols(cup) and JMScanner(jlex) code -->
+	<target name="createCupJLex" 
+		    description="Generates JMParser(cup), JMSymbols(cup) and JMScanner(jlex) code">
+		<delete file="${calculadora}/JMScanner.java"/>
+		<delete file="${calculadora}/JMParser.java"/>
+		<delete file="${calculadora}/JMSymbols.java"/>
+
+		<java classname="java_cup.Main">
+			<arg line="-parser JMParser -symbols JMSymbols ${calculadora}/jmparser.cup"/>
+			<classpath refid="project.classpath"/>
+		</java>
+		<java classname="JLex.Main">
+			<arg line="${calculadora}/jmscanner.lex"/>
+			<classpath refid="project.classpath"/>
+		</java>
+
+		<move file="JMParser.java" tofile="${calculadora}/JMParser.java"/>
+		<move file="JMSymbols.java" tofile="${calculadora}/JMSymbols.java"/>
+		<move file="${calculadora}/jmscanner.lex.java" tofile="${calculadora}/JMScanner.java"/>
+	</target>
+
+    <!-- ALL -->
+    <target name="all" 
+            depends="createCupJLex" 
+            description="generates the JMParser(cup), JMSymbols(cup) and JMScanner(jlex) code;">
+    </target>
+</project>
