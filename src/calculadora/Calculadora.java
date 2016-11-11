@@ -37,7 +37,6 @@ public class Calculadora {
 	}
 	
 	public void precedencia(){
-		int answer = 0;
 		int pos_TIMES = -1;
 		int pos_DIVIDE= -1;
 		
