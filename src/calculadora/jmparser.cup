@@ -39,8 +39,8 @@ non terminal expr, term, opr;
 expr ::=  INT:e 				{: parser.getCalculadora().addOperand(e, true); :}
 		| PLUS INT:e			{: parser.getCalculadora().addOperand(e, true);	:}
 		| MINUS INT:e			{: parser.getCalculadora().addOperand(e, false);:}
-       	| MINUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, false);:}
-       	| PLUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, true); :}
+       		| MINUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, false);:}
+       		| PLUS INT:e opr expr	{: parser.getCalculadora().addOperand(e, true); :}
 		| INT:e opr expr		{: parser.getCalculadora().addOperand(e, true); :}
 		;
        
