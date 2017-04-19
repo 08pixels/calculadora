@@ -1,7 +1,6 @@
 package calculadora;
 
 import java.io.StringReader;
-
 import javax.swing.JOptionPane;
 
 public class Run
@@ -10,11 +9,11 @@ public class Run
 	{
 		String expr     = JOptionPane.showInputDialog("Entrada: ");
 		Yylex scanner   = new Yylex(new StringReader(expr));
-        JMParser parser = new JMParser(scanner);
-        parser.parse();
+        	JMParser parser = new JMParser(scanner);
+        	parser.parse();
 
-        Calculadora c = parser.getCalculadora();
-        JOptionPane.showMessageDialog(null, "Resultado: " + c.imprime());
+        	Calculadora c = parser.getCalculadora();
+        	JOptionPane.showMessageDialog(null, "Resultado: " + c.imprime());
 	}
 
 	public static void main(String[] args)
